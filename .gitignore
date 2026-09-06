@@ -1,0 +1,7 @@
+.terraform.*
+.terraform/
+*.auto.pkrvars.hcl
+/files/
+/isos/
+/output*/
+terraform.tfstate*
