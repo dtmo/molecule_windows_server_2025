@@ -57,35 +57,18 @@ source "qemu" "windows_server_2025" {
   ssh_password = local.guest_password
   ssh_timeout  = "10h"
 
-  shutdown_command = "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -File %TEMP%\\generalize.ps1"
+  shutdown_command = "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -File E:\\scripts\\generalize.ps1"
 }
 
 build {
   source "qemu.windows_server_2025" {
   }
 
-  provisioner "file" {
-    source      = "${path.root}/cloudbase-init/cloudbase-init-unattend.conf"
-    destination = "C:/Users/${local.guest_username}/AppData/Local/Temp/cloudbase-init-unattend.conf"
-  }
-
-  provisioner "file" {
-    source      = "${path.root}/cloudbase-init/Unattend.xml"
-    destination = "C:/Users/${local.guest_username}/AppData/Local/Temp/Unattend.xml"
-  }
-
   provisioner "powershell" {
     inline = [
       "Start-Process msiexec.exe -Wait -ArgumentList \"/package E:\\files\\CloudbaseInitSetup_1_1_8_x64.msi /passive\"",
-      "Copy-Item \"$env:TEMP\\cloudbase-init-unattend.conf\" -Destination \"C:\\Program Files\\Cloudbase Solutions\\Cloudbase-Init\\conf\\cloudbase-init-unattend.conf\"",
-      "Copy-Item \"$env:TEMP\\Unattend.xml\" -Destination \"C:\\Program Files\\Cloudbase Solutions\\Cloudbase-Init\\conf\\Unattend.xml\"",
-      "Remove-Item -Path \"$env:TEMP\\cloudbase-init-unattend.conf\"",
-      "Remove-Item -Path \"$env:TEMP\\Unattend.xml\"",
+      "Copy-Item \"E:\\scripts\\cloudbase-init\\cloudbase-init-unattend.conf\" -Destination \"C:\\Program Files\\Cloudbase Solutions\\Cloudbase-Init\\conf\\cloudbase-init-unattend.conf\"",
+      "Copy-Item \"E:\\scripts\\cloudbase-init\\Unattend.xml\" -Destination \"C:\\Program Files\\Cloudbase Solutions\\Cloudbase-Init\\conf\\Unattend.xml\"",
     ]
-  }
-
-  provisioner "file" {
-    source      = "${path.root}/scripts/generalize.ps1"
-    destination = "C:/Users/${local.guest_username}/AppData/Local/Temp/generalize.ps1"
   }
 }
