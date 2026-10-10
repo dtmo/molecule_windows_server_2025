@@ -38,9 +38,9 @@ resource "libvirt_domain" "example" {
       EOT
   }
 
-  memory      = 4096
+  memory      = 8192
   memory_unit = "MiB"
-  vcpu        = 2
+  vcpu        = 4
   type        = "kvm"
 
   os = {

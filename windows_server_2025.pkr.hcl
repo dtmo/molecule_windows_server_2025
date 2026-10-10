@@ -23,9 +23,9 @@ source "qemu" "windows_server_2025" {
   disk_interface = "virtio-scsi"
   disk_size      = "50G"
   machine_type   = "q35"
-  memory         = 4096
+  memory         = 8192
   cpu_model      = "host"
-  cpus           = 2
+  cpus           = 4
 
   efi_boot          = true
   efi_firmware_code = var.efi_firmware_code
