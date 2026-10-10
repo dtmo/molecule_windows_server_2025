@@ -170,7 +170,7 @@ resource "libvirt_domain" "example" {
     ]
 
     sounds = [
-      { model = "virtio" },
+      { model = "ich9" },
     ]
 
     videos = [
